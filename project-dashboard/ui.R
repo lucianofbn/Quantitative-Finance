@@ -35,35 +35,47 @@ dashboardPage(
         tabItem(tabName = "price", dataTableOutput("pricenow")),
         
         tabItem("charts",
+                 fluidPage(
                   box(
                   title = "Enter Stock Code",width = 4, 
                   solidHeader = TRUE, 
                   status = "warning",
-                  textInput("stockcodey", "Stock Y:", value = "GBPUSD=X"),
-                  textInput("stockcodex", "Stock X:", value = "EURUSD=X"),
+                  textInput("stockcodey", "Stock y:", value = "GBPUSD=X"),
+                  textInput("stockcodex", "Stock x:", value = "EURUSD=X"),
                   dateRangeInput('dateRange',label = 'Date range:', format= "dd/mm/yyyy", start = Sys.Date() - 15, end = Sys.Date()),
-                  selectInput("Select Chart", "Refresh interval",
+                  selectInput("chart", "Select chart:",
                               choices = c(
                                 "Residuals" = 1,
-                                "Stock Prices" = 2,
-                                "Price Difference" = 3,
-                                "Linear Regression Y" = 4,
-                                "Linear Regression X" = 5
+                                "Stock prices" = 2,
+                                "Price difference" = 3,
+                                "Linear regression y" = 4,
+                                "Linear regression x" = 5
                               ),
                               selected = 1
                   ),
-                  radioButtons("typeregression", "Regression", c(Simple = "simple")),
-                  actionButton(inputId = "click", label = "Predict")
-                ), 
+                  #radioButtons("typeregression", "Regression type:", c(Simple = "simple")),
+                  actionButton(inputId = "btnpredict", label = "Predict")
+                ),
+                
+                box(
+                  id = "info",
+                  solidHeader = TRUE,
+                  title = "Info",
+                  width = 8,
+                  status = "success",
+                  height = 180
+                ),
+                
                   box(
                     id = "plot",
                     solidHeader = TRUE,
                     title = "Chart",
                     width = 8,
                     status = "primary",
-                    plotOutput("auto.arima", height = 550),
+                    plotOutput("plot", height = 500),
                     height = 600
-                  )
+                  ))
+
       )
     )
   )
